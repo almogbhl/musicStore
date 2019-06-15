@@ -39,11 +39,12 @@ const CardBox = styled.div`
 
 const CardList = styled.ul`
   display: flex;
-  flex-wrap: wrap;
+
   width: 300px;
 
   @media (min-width: 700px) {
     width: 100%;
+    flex-wrap: wrap;
   }
 
   @media (min-width: 921px) {

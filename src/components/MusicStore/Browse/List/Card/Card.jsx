@@ -12,17 +12,36 @@ class Card extends Component {
   };
 
 
-  onItemEnter = () => {
-    this.setState({
-      isHover: true
-    });
+  onItemEvent = (action) => {
+    const isHover = this.state.isHover;
+
+    if(windows.innerWidth < "700px" && action === "click"){
+     if(!isHover) {
+      return this.setState({
+         isHover: true
+       });
+     } else {
+      return this.setState({
+        isHover: false
+      });
+     }
+    }
+
+    if(action === "enter") {
+      return this.setState({
+        isHover: true
+      });
+    }
+
+    if(action === "leave") {
+      return this.setState({
+        isHover: false
+      });
+    }
+
   };
 
-  onItemLeave = () => {
-    this.setState({
-      isHover: false
-    });
-  };
+
 
   // dispatch an action - duplicateItem
   duplicateItem = () => {
@@ -55,8 +74,9 @@ class Card extends Component {
       <Item
         ref="item"
         shape={view}
-        onMouseEnter={this.onItemEnter}
-        onMouseLeave={this.onItemLeave}
+        onMouseEnter={() => this.onItemEvent("enter")}
+        onMouseLeave={() => this.onItemEvent("leave")}
+        onClick={() => this.onItemEvent("click")}
       >
         <BackImg src={image} alt="artist cover" />
         <GreyBackground shape={view} isHover={isHover}>
@@ -119,10 +139,6 @@ const Item = styled.li`
   min-width: 280px;
   max-width: 280px;
   height: ${props => (props.shape === "CDs" ? "280px" : "300px")};
-  /* background-image: url(${props => props.url});
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat; */
   border-radius: ${props => (props.shape === "CDs" ? "50%" : "18px")};
   margin: 2rem 0px;
   box-shadow: 0 10px 30px 0 rgba(207, 217, 230, 0.5), 10px 10px 30px 0 #e8ecf1;
